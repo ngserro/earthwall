@@ -32,7 +32,7 @@ If you want to update you can simply run that command again.
 Make sure you are in the directory where the script is located and run:
 
 ```bash
-earthwall.sh 
+./earthwall.sh 
 ```
 That's it! Your wallpaper is now an image from earthview.withgoogle.com.
 
