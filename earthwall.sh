@@ -27,7 +27,7 @@ mkdir -p $HOME/Pictures/earthwall
 osversion=$(sw_vers -productVersion | sed 's/10.//1')
 
 # Get page index
-/usr/local/bin/wget -q http://earthview.withgoogle.com -O $HOME/Pictures/earthwall/.index.html 2> /dev/null
+/usr/bin/curl http://earthview.withgoogle.com  2>/dev/null > $HOME/Pictures/earthwall/.index.html 
 if [ $? -ne 0 ]; then
 	echo "Failed to get index from earthview.withgoogle.com"
 	exit 1
@@ -40,13 +40,14 @@ cat $HOME/Pictures/earthwall/.index.html | grep title=\"View | grep -o 'View.*in
 image_location=`cat $HOME/Pictures/earthwall/.image_location | sed 's/, /,/g' | sed 's/ /_/g'`
 
 # Get image
-/usr/local/bin/wget -q $image_url -O $HOME/Pictures/earthwall/$image_location-$image_name 2> /dev/null
+/usr/bin/curl $image_url  2>/dev/null > $HOME/Pictures/earthwall/$image_location-$image_name
 if [ $? -ne 0 ]; then
 	echo "Failed to get image from www.gstatic.com"
 	exit 1
 fi
 
 # Change wallpaper
+sleep 1
 if [ $(bc <<< "$osversion<10.0") -eq "1" ] ; then
 	var=$(echo "osascript -e 'tell application \"Finder\" to set desktop picture to POSIX file \"$HOME/Pictures/earthwall/$image_location-$image_name\"'")
 	eval $var
