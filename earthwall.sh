@@ -46,6 +46,17 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+# Apple script tested in El Capitan 
+osa_capitan="set theFile to POSIX file \"$HOME/Pictures/earthwall/$image_location-$image_name\"\n
+set theDesktops to {}\n
+\n
+tell application \"System Events\"\n
+    set theDesktops to a reference to every desktop\n
+    repeat with aDesktop in theDesktops\n
+        set picture of aDesktop to theFile\n
+    end repeat\n
+end tell"
+
 # Change wallpaper
 sleep 1
 if [ $(bc <<< "$osversion<10.0") -eq "1" ] ; then
@@ -53,6 +64,7 @@ if [ $(bc <<< "$osversion<10.0") -eq "1" ] ; then
 	eval $var
 else
 	sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$HOME/Pictures/earthwall/$image_location-$image_name'"
+	echo -e $osa_capitan | /usr/bin/osascript
 fi
 killall Dock
 
