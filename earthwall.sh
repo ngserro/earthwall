@@ -1,4 +1,4 @@
-#!/bin/bash  
+#!/bin/bash
 
 # * Name: earthwall.sh
 # * Description: Downloads random image from earthview.withgoogle.com and sets as wallpaper on OSX
@@ -14,7 +14,7 @@
 #   GNU General Public License for more details.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 # * Copyright (c) 2015, Nuno Serro
 
 # Test if OSX
@@ -27,7 +27,7 @@ mkdir -p $HOME/Pictures/earthwall
 osversion=$(sw_vers -productVersion | sed 's/10.//1')
 
 # Get page index
-/usr/bin/curl http://earthview.withgoogle.com  2>/dev/null > $HOME/Pictures/earthwall/.index.html 
+/usr/bin/curl https://earthview.withgoogle.com  2>/dev/null > $HOME/Pictures/earthwall/.index.html
 if [ $? -ne 0 ]; then
 	echo "Failed to get index from earthview.withgoogle.com"
 	exit 1
@@ -46,7 +46,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-# Apple script tested in El Capitan 
+# Apple script tested in El Capitan
 osa_capitan="set theFile to POSIX file \"$HOME/Pictures/earthwall/$image_location-$image_name\"\n
 set theDesktops to {}\n
 \n
