@@ -27,7 +27,7 @@ mkdir -p $HOME/Pictures/earthwall
 osversion=$(sw_vers -productVersion | sed 's/10.//1')
 
 # Get page index
-/usr/bin/curl https://earthview.withgoogle.com  2>/dev/null > $HOME/Pictures/earthwall/.index.html
+/usr/local/bin/wget -q http://earthview.withgoogle.com -O $HOME/Pictures/earthwall/.index.html 2> /dev/null
 if [ $? -ne 0 ]; then
 	echo "Failed to get index from earthview.withgoogle.com"
 	exit 1
@@ -40,7 +40,7 @@ cat $HOME/Pictures/earthwall/.index.html | grep title=\"View | grep -o 'View.*in
 image_location=`cat $HOME/Pictures/earthwall/.image_location | sed 's/, /,/g' | sed 's/ /_/g'`
 
 # Get image
-/usr/bin/curl $image_url  2>/dev/null > $HOME/Pictures/earthwall/$image_location-$image_name
+/usr/local/bin/wget -q $image_url -O $HOME/Pictures/earthwall/$image_location-$image_name 2> /dev/null
 if [ $? -ne 0 ]; then
 	echo "Failed to get image from www.gstatic.com"
 	exit 1
