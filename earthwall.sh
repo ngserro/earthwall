@@ -34,10 +34,13 @@ if [ $? -ne 0 ]; then
 fi
 
 # Set image url, name and location
-image_url=`cat $HOME/Pictures/earthwall/.index.html | grep prettyearth | grep 'https://www.gstatic.com/prettyearth/assets/full/[0-9]\{0,6\}.jpg' -m 1 -o`
+image_url=`cat $HOME/Pictures/earthwall/.index.html | grep prettyearth | grep 'https://www.gstatic.com/prettyearth/assets/full/[0-9]\{0,6\}.jpg' -m 1 -o | head -1`
 image_name=`echo $image_url | grep '[0-9]\{0,6\}.jpg' -m 1 -o`
-cat $HOME/Pictures/earthwall/.index.html | grep title=\"View | grep -o 'View.*in' | sed 's/View //g' | sed 's/ in//g' > $HOME/Pictures/earthwall/.image_location
-image_location=`cat $HOME/Pictures/earthwall/.image_location | sed 's/, /,/g' | sed 's/ /_/g'`
+
+#TODO: Find a way to retrieve image location. Possibly from title html tags?
+#cat $HOME/Pictures/earthwall/.index.html | awk -vRS="</title>" '/<title>/{gsub(/.*<title>|\n+/,"");print;exit}' > $HOME/Pictures/earthwall/.image_location
+#image_location=`cat $HOME/Pictures/earthwall/.image_location | sed 's/, /,/g' | sed 's/ /_/g'`
+#image_location=test
 
 # Get image
 /usr/local/bin/wget -q $image_url -O $HOME/Pictures/earthwall/$image_location-$image_name 2> /dev/null

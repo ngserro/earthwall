@@ -50,3 +50,7 @@ Then add a line like this:
 0 */2 * * * PATH_TO_SCRIPT/earthwall.sh
 ```
 This is an example for changing the wallpaper every 2 hours. Change PATH_TO_SCRIPT accordingly.
+
+# Dependencies
+
+Usually works out of the box, but may require wget in some OSX installations which does not install it by default.
