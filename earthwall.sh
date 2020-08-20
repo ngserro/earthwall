@@ -27,16 +27,17 @@ mkdir -p $HOME/Pictures/earthwall
 osversion=$(sw_vers -productVersion | sed 's/10.//1')
 
 # Get page index
-/usr/local/bin/wget -q http://earthview.withgoogle.com -O $HOME/Pictures/earthwall/.index.html 2> /dev/null
+/usr/local/bin/wget -q https://earthview.withgoogle.com -O $HOME/Pictures/earthwall/.index.html 2> /dev/null
 if [ $? -ne 0 ]; then
 	echo "Failed to get index from earthview.withgoogle.com"
 	exit 1
 fi
 
 # Set image url, name and location
-image_url=`cat $HOME/Pictures/earthwall/.index.html | grep prettyearth | grep 'https://www.gstatic.com/prettyearth/assets/full/[0-9]\{0,6\}.jpg' -m 1 -o`
+image_url=`cat $HOME/Pictures/earthwall/.index.html | grep prettyearth | grep 'https://www.gstatic.com/prettyearth/assets/full/[0-9]\{0,6\}.jpg' -m 1 -o | head -n 1`
 image_name=`echo $image_url | grep '[0-9]\{0,6\}.jpg' -m 1 -o`
-cat $HOME/Pictures/earthwall/.index.html | grep title=\"View | grep -o 'View.*in' | sed 's/View //g' | sed 's/ in//g' > $HOME/Pictures/earthwall/.image_location
+# cat $HOME/Pictures/earthwall/.index.html | grep title=\"View | grep -o 'View.*in' | sed 's/View //g' | sed 's/ in//g' > $HOME/Pictures/earthwall/.image_location
+cat $HOME/Pictures/earthwall/.index.html | grep -m 1 -o '__region\">.*<\/' | sed -e 's/.*region\">\(.*\)<\/div><div.*/\1/' | sed 's/div//g' | sed 's/[<>\/=\"]//g' | sed 's/classlocation__country//g' > $HOME/Pictures/earthwall/.image_location
 image_location=`cat $HOME/Pictures/earthwall/.image_location | sed 's/, /,/g' | sed 's/ /_/g'`
 
 # Get image
