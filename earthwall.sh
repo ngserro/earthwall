@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # * Name: earthwall.sh
-# * Description: Downloads random image from earthview.withgoogle.com and sets as wallpaper on OSX
+# * Description: Downloads random image from earthview.withgoogle.com and sets as wallpaper on macOS
 # * Author: Nuno Serro
 # * Date: 09/07/2015 22:24:11 WEST
 # * License: This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
 #
 # * Copyright (c) 2015, Nuno Serro
 
-# Test if OSX
+# Test if macOS
 if [ "$(uname -s)" != "Darwin" ] ; then
-	echo "This script only works on OSX"
+	echo "This script only works on macOS"
 	exit 1
 fi
 
